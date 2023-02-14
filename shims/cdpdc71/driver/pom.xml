@@ -33,6 +33,7 @@
     <joda-time.version>2.10</joda-time.version>
     <jython.version>2.5.3</jython.version>
     <jetty.version>9.3.20.v20170531</jetty.version>
+    <gateway-shell>1.0.0</gateway-shell>
   </properties>
 
   <dependencyManagement>
@@ -428,6 +429,17 @@
       <artifactId>failureaccess</artifactId>
       <version>${failureaccess.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.knox</groupId>
+      <artifactId>gateway-shell</artifactId>
+      <version>${gateway-shell}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
   </dependencies>
 
   <build>
@@ -444,7 +456,7 @@
                 *:hive-service,*:orc-core,*:hadoop-common,*:hadoop-hdfs,*:hadoop-mapreduce-*,
                 *:hadoop-yarn-api,*:hbase-client,*:hbase-common,*:hbase-hadoop-compat,*:hbase-protocol,
                 *:hbase-server,*:oozie-client,*:parquet-hadoop-bundle,*:zookeeper,*:hbase-shaded-miscellaneous,
-                org.eclipse.jetty:*,com.google.guava:*
+                org.eclipse.jetty:*,com.google.guava:*,*:gateway-shell
               </include>
               <exclude>
                 *:*log4j*,*:xml-apis,*:xercesImpl,*:commons-logging,*:commons-math3,*:commons-pool,*:commons-dbcp,
@@ -457,6 +469,9 @@
                 <!--Needed for Pig-->
                 *:antlr-runtime,*:automaton,*:pig,*:parquet-pig,*:sqoop,*:joda-time,*:jython
               </include>
+              <exclude>
+                *:tests:*
+              </exclude>
               <transitive>false</transitive>
             </resolverFilter>
           </resolverFilters>
@@ -481,9 +496,6 @@
             <Bundle-Version>7.1.cdpdc</Bundle-Version>
             <Pentaho-Code-Version>${pentaho-code.version}</Pentaho-Code-Version>
             <DynamicImport-Package>*</DynamicImport-Package>
-            <excludes>
-              <exclude>**/*tests.jar</exclude>
-            </excludes>
             <Import-Package>
             </Import-Package>
             <_exportcontents>
